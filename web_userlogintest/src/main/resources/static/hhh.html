@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+<form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+    <button type="button" onclick="login()">Login</button>
+</form>
+
+<script>
+    function login() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8080/login", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        var data = JSON.stringify({
+            "username": username,
+            "password": password
+        });
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var json = JSON.parse(xhr.responseText);
+                console.log(json);
+                // 根据响应更新页面或其他逻辑
+            }
+        };
+
+        xhr.send(data);
+    }
+</script>
+</body>
+</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Login Page</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form id="loginForm">-->
+<!--    <label for="username">Username:</label>-->
+<!--    <input type="text" id="username" name="username" required><br>-->
+<!--    <label for="password">Password:</label>-->
+<!--    <input type="password" id="password" name="password" required><br>-->
+<!--    <input type="submit" value="Login">-->
+<!--</form>-->
+
+<!--<script src="login.js"></script>-->
+<!--</body>-->
+<!--<script>-->
+<!--    document.getElementById('loginForm').addEventListener('submit', function(event) {-->
+<!--        // 阻止表单默认的提交行为，因为我们将手动发送AJAX请求-->
+<!--        event.preventDefault();-->
+
+<!--        // 获取表单数据-->
+<!--        var username = document.getElementById('username').value;-->
+<!--        var password = document.getElementById('password').value;-->
+
+<!--        // 创建一个新的FormData对象来存储表单数据（尽管在这个简单的例子中我们直接使用字符串）-->
+<!--        // var formData = new FormData();-->
+<!--        // formData.append('username', username);-->
+<!--        // formData.append('password', password);-->
+
+<!--        // 创建一个新的XHR对象-->
+<!--        var xhr = new XMLHttpRequest();-->
+
+<!--        // 设置请求类型、URL等-->
+<!--        xhr.open('POST', 'http://localhost:8080/login', true);-->
+
+<!--        // 设置请求头（如果需要的话，比如Content-Type）-->
+<!--        // 注意：对于FormData，通常不需要手动设置Content-Type，因为XHR会自动设置-->
+<!--        // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');-->
+
+<!--        // 发送请求-->
+<!--        // 如果使用FormData，则直接发送formData对象：xhr.send(formData);-->
+<!--        xhr.send('username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password));-->
+
+<!--        // 处理响应-->
+<!--        xhr.onreadystatechange = function() {-->
+<!--            if (xhr.readyState === 4 && xhr.status === 200) {-->
+<!--                console.log(xhr.responseText); // 在控制台打印响应文本-->
+<!--                // 根据响应更新页面或其他逻辑-->
+<!--            } else if (xhr.status !== 200) {-->
+<!--                console.error('Error: ' + xhr.status); // 如果不是200状态码，打印错误信息-->
+<!--            }-->
+<!--        };-->
+<!--    });-->
+<!--</script>-->
+<!--</html>-->
